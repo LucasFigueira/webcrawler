@@ -42,6 +42,7 @@ public class CrawlerService {
 			if(htmlPaginaAtual == null) {
 				continue;
 			}
+			assets.getLinks().add(href);
 			
 			Document docAtual = Jsoup.parse(htmlPaginaAtual);
 			Elements links = docAtual.select("link");
@@ -109,7 +110,7 @@ public class CrawlerService {
 			u = new URL(url);
 			
 			URLConnection conn = u.openConnection();
-			conn.setRequestProperty("User-Agent", "BBot/1.0");
+			//conn.setRequestProperty("User-Agent", "BBot/1.0");
 			conn.setRequestProperty("Accept-Charset", "UTF-8");
 			
 			InputStream is = conn.getInputStream();
