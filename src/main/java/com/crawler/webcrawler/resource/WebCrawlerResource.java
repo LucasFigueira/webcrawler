@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crawler.webcrawler.model.Assets;
+import com.crawler.webcrawler.model.Url;
 import com.crawler.webcrawler.service.CrawlerService;
  
 
@@ -23,8 +24,8 @@ public class WebCrawlerResource {
 	CrawlerService crawlerService;
 	
 	@PostMapping
-	public ResponseEntity<Map<String,Assets>> pesquisar(@RequestBody String url) {
+	public ResponseEntity<Map<String,Assets>> pesquisar(@RequestBody Url url) {
  
-		return crawlerService.crawl(url);
+		return crawlerService.crawl(url.getUrl());
 	}
 }
