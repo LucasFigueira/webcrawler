@@ -110,7 +110,7 @@ public class CrawlerService {
 			u = new URL(url);
 			
 			URLConnection conn = u.openConnection();
-			//conn.setRequestProperty("User-Agent", "BBot/1.0");
+			conn.setRequestProperty("User-Agent", "BBot/1.0");
 			conn.setRequestProperty("Accept-Charset", "UTF-8");
 			
 			InputStream is = conn.getInputStream();
