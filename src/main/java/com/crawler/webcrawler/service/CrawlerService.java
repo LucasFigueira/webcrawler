@@ -32,10 +32,7 @@ public class CrawlerService {
 			
 			Assets assets = new Assets();
 			
-			for (Element element : elements) {
-				String href = element.attr("href");
-				assets.getLinks().add(href);
-			}
+			
 			
 			String href = e.attr("href");
 			href = processLink(href, url);
@@ -45,6 +42,11 @@ public class CrawlerService {
 			String htmlPaginaAtual = getHTML(href);
 			if(htmlPaginaAtual == null) {
 				continue;
+			}
+			
+			for (Element element : elements) {
+				String href2 = element.attr("href");
+				assets.getLinks().add(href2);
 			}
 			
 			
