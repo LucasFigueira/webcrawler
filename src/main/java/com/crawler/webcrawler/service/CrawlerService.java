@@ -51,7 +51,7 @@ public class CrawlerService {
 				String css = element.attr("href");
 			    assets.getCss().add(css) ;
 			}
-			
+/*			
 			Elements js = docAtual.select("script");
 			for (Element element : js) { 
 				if(element.attr("src").contentEquals("")) {
@@ -66,7 +66,7 @@ public class CrawlerService {
 					continue;
 				}
 			    assets.getImages().add( element.attr("src")) ;
-			}
+			}*/
 			pagina.put(href, assets);
 			System.out.println(href);
 		}
