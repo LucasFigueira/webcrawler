@@ -19,9 +19,10 @@ import com.crawler.webcrawler.model.Assets;
  
 @Service
 public class CrawlerService {
-	private Map<String,Assets> pagina = new HashMap<String, Assets>() ; 
+	
 	
 	public ResponseEntity<Map<String, Assets>> crawl(String url) { 
+		Map<String,Assets> pagina = new HashMap<String, Assets>() ;
 		
 		String html = getHTML(url); 
 		
@@ -36,7 +37,7 @@ public class CrawlerService {
 			
 			String href = e.attr("href");
 			href = processLink(href, url);
-			if(pagina.containsKey(href) ) {
+			if(href == null || pagina.containsKey(href) || !href.contains(url)) {
 				continue;
 			}
 			String htmlPaginaAtual = getHTML(href);
@@ -44,10 +45,14 @@ public class CrawlerService {
 				continue;
 			}
 			
-			/*for (Element element : elements) {
+			for (Element element : elements) {
 				String href2 = element.attr("href");
+				
+				if(href2.length() <=3)
+					continue;
+				
 				assets.getLinks().add(href2);
-			}*/
+			}
 			
 			
 			Document docAtual = Jsoup.parse(htmlPaginaAtual);
@@ -56,45 +61,48 @@ public class CrawlerService {
 			Elements elementosCss = links.attr("rel", "stylesheet").attr("type", "text/css");  
 			for (Element element : elementosCss) {
 				String css = element.attr("href");
+				
+				if(css.length() <= 3)
+					continue;
+				
 			    assets.getCss().add(css) ;
 			}
 			
-			/*Elements js = docAtual.select("script");
+			Elements js = docAtual.select("script");
 			for (Element element : js) { 
-				if(element.attr("src").contentEquals("")) {
+				if(element.attr("src").contentEquals("") || element.attr("src").length() <=3 ) {
 					continue;
 				}
 			    assets.getJs().add( element.attr("src"));
-			}*/
+			}
 			
-			/*Elements img = docAtual.select("img");
+			Elements img = docAtual.select("img");
 			for (Element element : img) { 
-				if(element.attr("src").contentEquals("")) {
+				if(element.attr("src").contentEquals("") || element.attr("src").length() <=3 ) {
 					continue;
 				}
 			    assets.getImages().add( element.attr("src")) ;
-			}*/
+			}
 			pagina.put(href, assets);
 			System.out.println(href);
-		}
-		System.out.println(processLink("../", url));
+		} 
 		
 		return ResponseEntity.ok(pagina);
 	}
 	
 	private String processLink(String link, String base) {
 		
-		try {
+		try { 
 			URL u = new URL(base);
 			if (link.startsWith("./")) {
 				link = link.substring(2, link.length());
 				link = u.getProtocol() + "://" + u.getAuthority() + stripFilename(u.getPath()) + link;
 			} else if (link.startsWith("#")) {
 				link = base + link;
-			} else if (link.startsWith("javascript:") || link.toLowerCase().contains("twitter") || link.toLowerCase().contains("forum")) {
+			} else if (link.startsWith("javascript:") || link.length() ==0) {
 				link = null;
 			} else if (link.startsWith("../") || (!link.startsWith("http://") && !link.startsWith("https://"))) {
-				link = u.getProtocol() + "://" + u.getAuthority() + stripFilename(u.getPath()) + link;
+				link = u.getProtocol() + "://" + u.getAuthority() + link;
 			}
 			return link;
 		} catch (Exception e) { 
