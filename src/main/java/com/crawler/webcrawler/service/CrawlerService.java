@@ -44,10 +44,10 @@ public class CrawlerService {
 				continue;
 			}
 			
-			for (Element element : elements) {
+			/*for (Element element : elements) {
 				String href2 = element.attr("href");
 				assets.getLinks().add(href2);
-			}
+			}*/
 			
 			
 			Document docAtual = Jsoup.parse(htmlPaginaAtual);
@@ -59,21 +59,21 @@ public class CrawlerService {
 			    assets.getCss().add(css) ;
 			}
 			
-			Elements js = docAtual.select("script");
+			/*Elements js = docAtual.select("script");
 			for (Element element : js) { 
 				if(element.attr("src").contentEquals("")) {
 					continue;
 				}
 			    assets.getJs().add( element.attr("src"));
-			}
+			}*/
 			
-			Elements img = docAtual.select("img");
+			/*Elements img = docAtual.select("img");
 			for (Element element : img) { 
 				if(element.attr("src").contentEquals("")) {
 					continue;
 				}
 			    assets.getImages().add( element.attr("src")) ;
-			}
+			}*/
 			pagina.put(href, assets);
 			System.out.println(href);
 		}
@@ -97,8 +97,7 @@ public class CrawlerService {
 				link = u.getProtocol() + "://" + u.getAuthority() + stripFilename(u.getPath()) + link;
 			}
 			return link;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) { 
 			return null;
 		}
 		
@@ -130,8 +129,7 @@ public class CrawlerService {
 			html = html.trim();
 			
 			return html;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) { 
 			return null;
 		}
 		
