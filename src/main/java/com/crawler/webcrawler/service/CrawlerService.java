@@ -32,8 +32,12 @@ public class CrawlerService {
 			
 			Assets assets = new Assets();
 			
-			String href = e.attr("href");
+			for (Element element : elements) {
+				String href = element.attr("href");
+				assets.getLinks().add(href);
+			}
 			
+			String href = elements.attr("href");
 			href = processLink(href, url);
 			if(pagina.containsKey(href) ) {
 				continue;
@@ -42,7 +46,7 @@ public class CrawlerService {
 			if(htmlPaginaAtual == null) {
 				continue;
 			}
-			assets.getLinks().add(href);
+			
 			
 			Document docAtual = Jsoup.parse(htmlPaginaAtual);
 			Elements links = docAtual.select("link");
