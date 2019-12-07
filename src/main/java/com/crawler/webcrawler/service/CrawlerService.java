@@ -37,7 +37,7 @@ public class CrawlerService {
 				assets.getLinks().add(href);
 			}
 			
-			String href = elements.attr("href");
+			String href = e.attr("href");
 			href = processLink(href, url);
 			if(pagina.containsKey(href) ) {
 				continue;
